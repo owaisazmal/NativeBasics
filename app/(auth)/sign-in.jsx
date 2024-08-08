@@ -1,18 +1,20 @@
-import { View, Text, ScrollView, Image } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
+import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
+import { Link, router } from "expo-router";
 
 const SignIn = () => {
+  const { setUser, setIsLogged } = useGlobalContext();
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-  const [form, setform] = useState({
-    email:'',
-    password:''
-  })
-  const [isSubmitting, setisSubmitting] = useState(false)
   const submit = () => {
 
   }
@@ -29,18 +31,19 @@ const SignIn = () => {
             Log in to Aora
         </Text>
         <FormField
-        title="Email"
-        value={form.email}
-        handleChangeText={(e) => setForm({...form, email: e })}
-        otherStyles="mt-7"
-        KeyboardType="email-address"
-        />
-        <FormField
-        title="Password"
-        value={form.password}
-        handleChangeText={(e) => setForm({...form, password: e })}
-        otherStyles="mt-7"
-        />
+            title="Email"
+            value={form.email}
+            handleChangeText={(e) => setForm({ ...form, email: e })}
+            otherStyles="mt-7"
+            keyboardType="email-address"
+          />
+
+          <FormField
+            title="Password"
+            value={form.password}
+            handleChangeText={(e) => setForm({ ...form, password: e })}
+            otherStyles="mt-7"
+          />
 
         <CustomButton 
         title="Sign In"
@@ -52,6 +55,12 @@ const SignIn = () => {
           <Text className="text-lg text-gray-100 font-pregular">
             Don't have an account?
           </Text>
+          <Link
+              href="/sign-up"
+              className="text-lg font-psemibold text-secondary"
+            >
+              Signup
+          </Link>
         </View>
         </View>
       </ScrollView>
