@@ -18,7 +18,7 @@ const SignUp = () => {
   });
 
   const submit = async () => {
-if (form.username === "" || form.email === "" || form.password === "") {
+    if (form.username === "" || form.email === "" || form.password === "") {
       Alert.alert("Error", "Please fill in all fields");
     }
 
@@ -34,26 +34,35 @@ if (form.username === "" || form.email === "" || form.password === "") {
     } finally {
       setSubmitting(false);
     }
-  }
+  };
+  
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full justify-center h-full px-4 my-6"> 
-        <Image
-        source={images.logo}
-        resizeMode='contain'
-        className="w-[115px]"
-        />
-       <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign up to Aora
-        </Text>
-        <FormField
+        <View
+          className="w-full flex justify-center h-full px-4 my-6"
+          style={{
+            minHeight: Dimensions.get("window").height - 100,
+          }}
+        >
+          <Image
+            source={images.logo}
+            resizeMode="contain"
+            className="w-[115px] h-[34px]"
+          />
+
+          <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
+            Sign Up to Aora
+          </Text>
+
+          <FormField
             title="Username"
             value={form.username}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
             otherStyles="mt-10"
           />
-        <FormField
+
+          <FormField
             title="Email"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
@@ -68,27 +77,28 @@ if (form.username === "" || form.email === "" || form.password === "") {
             otherStyles="mt-7"
           />
 
-        <CustomButton 
-        title="Sign Up"
-        handlePress={submit}
-        containerStyles="mt-7"
-        isLoading={isSubmitting}
-        />
-        <View className="flex justify-center pt-5 flex-row gap-2">
-          <Text className="text-lg text-gray-100 font-pregular">
-            Have an account already?
-          </Text>
-          <Link
+          <CustomButton
+            title="Sign Up"
+            handlePress={submit}
+            containerStyles="mt-7"
+            isLoading={isSubmitting}
+          />
+
+          <View className="flex justify-center pt-5 flex-row gap-2">
+            <Text className="text-lg text-gray-100 font-pregular">
+              Have an account already?
+            </Text>
+            <Link
               href="/sign-in"
               className="text-lg font-psemibold text-secondary"
             >
-              Sign In
-          </Link>
-        </View>
+              Login
+            </Link>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default SignUp
