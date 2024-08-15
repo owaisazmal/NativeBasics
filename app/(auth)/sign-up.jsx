@@ -6,6 +6,7 @@ import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import { Link, router } from "expo-router";
+import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
   //const { setUser, setIsLogged } = useGlobalContext();
@@ -16,8 +17,23 @@ const SignUp = () => {
     password: '',
   });
 
-  const submit = () => {
+  const submit = async () => {
+if (form.username === "" || form.email === "" || form.password === "") {
+      Alert.alert("Error", "Please fill in all fields");
+    }
 
+    setSubmitting(true);
+    try {
+      const result = await createUser(form.email, form.password, form.username);
+      setUser(result);
+      setIsLogged(true);
+
+      router.replace("/home");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setSubmitting(false);
+    }
   }
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -53,7 +69,7 @@ const SignUp = () => {
           />
 
         <CustomButton 
-        title="Sign In"
+        title="Sign Up"
         handlePress={submit}
         containerStyles="mt-7"
         isLoading={isSubmitting}
@@ -66,7 +82,7 @@ const SignUp = () => {
               href="/sign-in"
               className="text-lg font-psemibold text-secondary"
             >
-              Sign in
+              Sign In
           </Link>
         </View>
         </View>
